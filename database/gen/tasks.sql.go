@@ -106,15 +106,15 @@ func (q *Queries) GetAllUnfinishedTasks(ctx context.Context) ([]Task, error) {
 	return items, nil
 }
 
-const getTaskById = `-- name: GetTaskById :one
+const getTaskByID = `-- name: GetTaskByID :one
 SELECT id, title, description, due_date, is_completed
 FROM tasks
 WHERE id = $1
 LIMIT 1
 `
 
-func (q *Queries) GetTaskById(ctx context.Context, id int32) (Task, error) {
-	row := q.db.QueryRow(ctx, getTaskById, id)
+func (q *Queries) GetTaskByID(ctx context.Context, id int32) (Task, error) {
+	row := q.db.QueryRow(ctx, getTaskByID, id)
 	var i Task
 	err := row.Scan(
 		&i.ID,
@@ -126,7 +126,7 @@ func (q *Queries) GetTaskById(ctx context.Context, id int32) (Task, error) {
 	return i, err
 }
 
-const updateAuthor = `-- name: UpdateAuthor :exec
+const updateTask = `-- name: UpdateTask :exec
 UPDATE tasks
 SET title = $2,
     description = $3,
@@ -135,7 +135,7 @@ SET title = $2,
 WHERE id = $1
 `
 
-type UpdateAuthorParams struct {
+type UpdateTaskParams struct {
 	ID          int32
 	Title       string
 	Description pgtype.Text
@@ -143,8 +143,8 @@ type UpdateAuthorParams struct {
 	IsCompleted pgtype.Bool
 }
 
-func (q *Queries) UpdateAuthor(ctx context.Context, arg UpdateAuthorParams) error {
-	_, err := q.db.Exec(ctx, updateAuthor,
+func (q *Queries) UpdateTask(ctx context.Context, arg UpdateTaskParams) error {
+	_, err := q.db.Exec(ctx, updateTask,
 		arg.ID,
 		arg.Title,
 		arg.Description,

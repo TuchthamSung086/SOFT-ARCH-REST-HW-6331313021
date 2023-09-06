@@ -8,7 +8,7 @@ FROM tasks;
 SELECT *
 FROM tasks
 WHERE is_completed = false;
--- name: GetTaskById :one
+-- name: GetTaskByID :one
 SELECT *
 FROM tasks
 WHERE id = $1
@@ -16,7 +16,7 @@ LIMIT 1;
 -- name: DeleteTask :exec
 DELETE FROM tasks
 WHERE id = $1;
--- name: UpdateAuthor :exec
+-- name: UpdateTask :exec
 UPDATE tasks
 SET title = $2,
     description = $3,

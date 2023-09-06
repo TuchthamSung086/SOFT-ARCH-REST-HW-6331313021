@@ -14,4 +14,7 @@ func (s *server) setRoutes(th *handler.TaskHandler) {
 
 	s.fiberApp.Post("/tasks", th.CreateTask)
 	s.fiberApp.Get("/tasks", th.GetAllTasks)
+	s.fiberApp.Get("/tasks/:id", th.GetTaskByID)
+	s.fiberApp.Put("/tasks/:id", th.UpdateTask)
+	s.fiberApp.Delete("/tasks/:id", th.DeleteTask)
 }

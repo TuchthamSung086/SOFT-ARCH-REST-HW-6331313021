@@ -21,11 +21,9 @@ func loadConfig(localMode bool) (*config, error) {
 	}
 
 	cfg := new(config)
-	fmt.Println("trying to print env1")
 	if _, err := env.UnmarshalFromEnviron(cfg); err != nil {
 		return nil, fmt.Errorf("failed to parse environment variables: %w", err)
 	}
-	fmt.Println("trying to print env2")
-	fmt.Println(cfg.PostgresURL)
+	fmt.Println("Loaded environment successfully.")
 	return cfg, nil
 }
